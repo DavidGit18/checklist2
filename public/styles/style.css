@@ -1,0 +1,153 @@
+body{
+    background-image: url('https://static.vecteezy.com/system/resources/previews/027/684/073/non_2x/autumn-leaves-background-free-photo.jpg'); /* Změňte cestu k vašemu obrázku */;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  h1 {
+    text-align: center;
+    font-family: 'cursive';
+    font-size: 48px;
+    text-transform: uppercase;
+    background: #e63601; /* Barva pozadí */
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: text-shadow-flicker 3s infinite;
+  }
+  
+  
+  @keyframes text-shadow-flicker {
+    0% {
+      text-shadow: 0 0 20px #e63601, 0 0 30px #e63601, 0 0 40px #e63601; /* Zvětšený textový stín */
+    }
+    50% {
+      text-shadow: 0 0 20px #e63601, 0 0 40px #e63601, 0 0 50px #e63601;
+    }
+    100% {
+      text-shadow: 0 0 20px #e63601, 0 0 30px #e63601, 0 0 40px #e63601;
+    }
+  }
+  
+  
+  /* Moderní podzimní styl pro formulář */
+  form {
+  text-align: center;
+  margin: 10px;
+  background-color: rgba(0, 0, 0, 0.8); /* Průhledná šedá barva pozadí (RGBA) */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(102, 12, 0, 0.2); /* Hnědý odstín stínu */
+  color: #333; /* Černá barva textu */
+}
+
+form label {
+  display: block;
+  color: transparent;
+  background: #e63601; /* Barva pozadí popisku */
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: text-shadow-flicker 3s infinite;
+}
+
+form input[type="text"],
+form input[type="date"],
+form select {
+  margin: 10px;
+  padding: 10px;
+  background-color: rgba(244, 244, 244, 0.9); /* Průhledná šedá barva pro vstupy (RGBA) */
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+form button {
+  margin: 10px;
+  padding: 10px;
+  background-color: #af5b06; /* Hnědá barva pro tlačítko */
+  color: #fff; /* Bílá barva textu tlačítka */
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  transition: background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #c94219; /* Teplý hnědý odstín pro tlačítko při najetí myší */
+}
+
+/* Klíčové snímky pro animaci podzimního efektu */
+@keyframes autumn-fall {
+  0% {
+      transform: translateY(-50px);
+  }
+  100% {
+      transform: translateY(0);
+  }
+}
+
+/* Animace pro vstupy */
+form input[type="text"],
+form input[type="date"],
+form select {
+  animation: autumn-fall 0.5s ease;
+}
+.task-tables {
+  display: flex;
+  justify-content: space-between;
+}
+
+#doneTable,
+#todoTable {
+    border-collapse: collapse; /* Odstranění mezery mezi buňkami tabulky */
+    width: 100%;
+    margin: 10px;
+    background: rgba(0, 0, 0, 0.8); /* Průhledné pozadí s bílou barvou */
+    box-shadow: 0 0 10px rgba(102, 12, 0, 0.2);
+}
+
+#doneTable th,
+#todoTable th {
+    background-color: #cf2608; /* Barva pozadí záhlaví tabulky */
+    color: white; /* Bílá barva textu v záhlaví tabulky */
+    text-align: left;
+}
+
+#doneTable th,
+#doneTable td,
+#todoTable th,
+#todoTable td {
+    padding: 10px; /* Odsazení buněk tabulky */
+}
+
+#doneTable tr:nth-child(even),
+#todoTable tr:nth-child(even) {
+    background-color: rgba(235, 66, 23, 0.2); /* Průhledné oranžové pozadí pro sudé řádky */
+    color:#fff;
+}
+
+#doneTable tr:nth-child(odd),
+#todoTable tr:nth-child(odd) {
+    background-color: rgba(255, 120, 80, 0.2); /* Průhledné oranžové pozadí pro liché řádky */
+    color:#fff
+}
+/* Styl pro tlačítka */
+button#toggleTasksButton,
+button#checkAllButton,
+button#uncheckAllButton {
+    background-color: #bb6107; 
+    color: #e2be46;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px ;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+button#toggleTasksButton:hover,
+button#checkAllButton:hover,
+button#uncheckAllButton:hover {
+    background-color: #da370e; 
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles/style.css">
+    <title>Teacher Checklist</title>
+</head>
+    
+<body>
+    <h1>Teacher Checklist</h1>
+
+    <form action="/" method="post">
+        <label for="task">Task:</label>
+        <input type="text" name="task" id="task" placeholder="Enter a task" required>
+        <label for="deadline">Deadline:</label>
+        <input type="date" name="deadline" id="deadline" required>
+        <label for="priority">Priority:</label>
+        <select name="priority" id="priority">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <div class="task-tables">
+        <!-- Sort and render tasks by priority -->
+<table id="todoTable">
+    <thead>
+        <tr>
+            <th>To-Do Tasks (By Priority)</th>
+        </tr>
+    </thead>
+    <tbody id="todoTasks">
+        <!-- Sort the tasks by priority -->
+        <% todoTasks
+            .sort((a, b) => a.priority.localeCompare(b.priority))
+            .forEach(function (task) { %>
+            <tr>
+                <td>
+                    <input type="checkbox" class="task-checkbox" <% if (task.is_completed) { %>checked<% } %>
+                        data-task-id="<%= task.id %>">
+                    <%= task.task_name %> (Deadline: <%= task.deadline %>, Priority: <%= task.priority %>)
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
+
+<!-- Sort and render tasks by date -->
+<table id="doneTable">
+    <thead>
+        <tr>
+            <th>Done Tasks (By Date)</th>
+        </tr>
+    </thead>
+    <tbody id="doneTasks">
+        <!-- Sort the tasks by date -->
+        <% doneTasks
+            .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
+            .forEach(function (task) { %>
+            <tr>
+                <td>
+                    <input type="checkbox" class="task-checkbox" checked data-task-id="<%= task.id %>">
+                    <%= task.task_name %> (Deadline: <%= task.deadline %>, Priority: <%= task.priority %>)
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
+        </table>
+    </div>
+   
+
+    <button id="toggleTasksButton">Toggle Tasks</button>
+    <button id="checkAllButton">Check All</button>
+    <button id="uncheckAllButton">Uncheck All</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleButton = document.getElementById('toggleTasksButton');
+            const todoTasks = document.getElementById('todoTasks');
+            const doneTasks = document.getElementById('doneTasks');
+
+            toggleButton.addEventListener('click', function () {
+    const tasks = document.querySelectorAll('input.task-checkbox');
+    tasks.forEach(function (task) {
+        if (task.checked) {
+            const parentRow = task.parentElement.parentElement;
+            const taskId = task.getAttribute('data-task-id');
+
+            // Update the task status in the database to 1 (completed)
+            fetch(`/update/${taskId}?completed=1`, {
+                method: 'POST',
+            }).then(response => {
+                if (response.ok) {
+                    const doneClone = parentRow.cloneNode(true);
+                    doneTasks.appendChild(doneClone);
+
+                    // Remove the task from the "To-Do" section
+                    parentRow.remove();
+                } else {
+                    console.error('Error updating task status in the database');
+                }
+            }).catch(error => {
+                console.error('Fetch error:', error);
+                        });
+                    }
+                });
+            });
+
+            const checkAllButton = document.getElementById('checkAllButton');
+            const uncheckAllButton = document.getElementById('uncheckAllButton');
+
+            checkAllButton.addEventListener('click', function () {
+                // Select all checkboxes in the "To-Do" section
+                const checkboxes = todoTasks.querySelectorAll('input.task-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = true;
+                });
+            });
+
+            uncheckAllButton.addEventListener('click', function () {
+    // Deselect all checkboxes in the "To-Do" section
+    const checkboxes = todoTable.querySelectorAll('input.task-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+
+        app.post('/update/:id', (req, res) => {
+  const taskId = req.params.id;
+  const isCompleted = req.query.completed === '1'; // Make sure it's '1'
+
+  connection.query(
+    'UPDATE tasks SET is_completed = ? WHERE id = ?',
+    [isCompleted, taskId],
+    function (error) {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Error updating task status.');
+      } else {
+        res.status(200).send('Task status updated.');
+      }
+    }
+  );
+});
+
+                });
+            });
+        });
+    </script>
+</body>
+</html>
